@@ -194,7 +194,7 @@ export default function App() {
 
         {/* Navigation */}
         <nav className="fixed top-0 w-full px-6 md:px-8 py-5 flex justify-between items-center z-50 bg-black/10 backdrop-blur-sm border-b border-white/[0.02]">
-          <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1 }} className="text-2xl font-bold tracking-widest gradient-text cursor-pointer z-50">
+          <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1 }} className="text-2xl font-bold tracking-widest cursor-pointer z-50 drop-shadow-[0_0_15px_rgba(216,180,254,0.6)]" style={{ background: "linear-gradient(135deg, #ffffff 0%, #d8b4fe 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
             Aman.Dev
           </motion.div>
           {/* Desktop Links */}
@@ -251,7 +251,12 @@ export default function App() {
             style={{ perspective: 1000 }}
           >
             <motion.h1
-              className="mb-4 gradient-text text-center"
+              className="mb-4 text-center drop-shadow-[0_0_35px_rgba(216,180,254,1)]"
+              style={{
+                background: "linear-gradient(135deg, #ffffff 0%, #d8b4fe 100%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent"
+              }}
               whileHover={{ scale: 1.02, rotateX: 5, rotateY: 5 }}
               transition={{ type: "spring", stiffness: 300 }}
             >
