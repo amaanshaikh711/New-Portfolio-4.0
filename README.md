@@ -1,73 +1,50 @@
-# React + TypeScript + Vite
+<div align="center">
+  <h1>Aman Shaikh | Interactive 3D Portfolio</h1>
+  
+  <p>
+    <strong>A visually stunning, immersive, and interactive portfolio designed to showcase a blend of Machine Learning logic and Full-Stack web creativity.</strong>
+  </p>
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+  <br />
+  
+  <img src="./public/portfolio-screenshot.png" alt="Aman Shaikh Portfolio Hero Section" width="100%" style="border-radius: 15px; box-shadow: 0 4px 30px rgba(0,0,0,0.5);" />
 
-Currently, two official plugins are available:
+</div>
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+<br />
 
-## React Compiler
+## ✦ Core Vision
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+This portfolio transcends the standard digital resume. Built with a focus on immersive aesthetics and smooth spatial interactions, it leverages **Three.js** and **React-Three-Fiber** to create a dynamic background that reacts to the user's presence. Every element—from the glowing gradients to the frosted glass panels—is crafted to provide a premium, unforgettable user experience. I am a Computer Science student blending the structured logic of Machine Learning with the expansive creativity of Full-Stack Web Development, and this portfolio is the digital embodiment of that intersection.
 
-## Expanding the ESLint configuration
+## ✦ Key Features
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **Immersive 3D Parallax Environment**: A dynamic, reacting spatial environment complete with drifting particles and a cursor-responsive liquid distortion effect.
+- **Modern Glassmorphism Design**: High-end frosted glass UI elements that blur the background and create an incredible sense of depth.
+- **Cinematic Typography & Accents**: Distinctive glowing accents (`#a855f7`) synchronized perfectly with the portfolio's identity.
+- **Smooth Animations**: Masterfully choreographed entrance and interaction animations using Framer Motion.
+- **Responsive Navigation**: An intelligent NavBar featuring a graceful background blur and an elegant mobile hamburger overlay menu.
+- **Interactive Project Cards**: Refined, highly professional rectangular layout emphasizing visual asset presentation.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## ✦ Technology Stack
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- **Framework**: React / Vite
+- **Styling**: Tailwind CSS & Vanilla CSS
+- **3D Rendering**: Three.js, React Three Fiber (`@react-three/fiber`), React Three Drei (`@react-three/drei`)
+- **Animation Engine**: Framer Motion
+- **Icons**: Lucide React
+- **Typography**: Inter & Outfit (Google Fonts)
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## ✦ Get In Touch
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Whether you're looking to discuss machine learning, web development, or potential collaborations, my inbox is always open. Let's build something meaningful together.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- **Email**: hello@amaanshaikh.com
+- **LinkedIn**: [Aman's LinkedIn](#)
+- **GitHub**: [Aman's GitHub](#)
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+---
+
+<div align="center">
+  <p>Crafted with intention by Aman Shaikh.</p>
+</div>
