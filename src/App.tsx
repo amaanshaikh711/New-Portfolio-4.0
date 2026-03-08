@@ -106,42 +106,64 @@ function FloatingParticles() {
 
 
 
-function AnimatedLetters({ text, delay = 0, className = "" }: { text: string, delay?: number, className?: string }) {
-  const letters = Array.from(text);
 
-  const container = {
-    hidden: { opacity: 0 },
-    visible: () => ({
-      opacity: 1,
-      transition: { staggerChildren: 0.05, delayChildren: delay * 0.3 }
-    }),
-  };
+function TypewriterEffect({ words, delay = 0, className = "" }: { words: string[], delay?: number, className?: string }) {
+  const [currentWordIndex, setCurrentWordIndex] = useState(0);
+  const [currentText, setCurrentText] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [isTypingStarted, setIsTypingStarted] = useState(false);
 
-  const child = {
-    visible: { opacity: 1, y: 0, scale: 1, filter: "blur(0px)" },
-    hidden: { opacity: 0, y: 50, scale: 0.8, filter: "blur(10px)" },
-  };
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setIsTypingStarted(true);
+    }, delay * 1000);
+    return () => clearTimeout(timeout);
+  }, [delay]);
+
+  useEffect(() => {
+    if (!isTypingStarted) return;
+
+    const word = words[currentWordIndex];
+    let timeoutId: ReturnType<typeof setTimeout>;
+
+    if (isDeleting) {
+      if (currentText === "") {
+        setIsDeleting(false);
+        setCurrentWordIndex((prev) => (prev + 1) % words.length);
+      } else {
+        timeoutId = setTimeout(() => {
+          setCurrentText(word.substring(0, currentText.length - 1));
+        }, 40);
+      }
+    } else {
+      if (currentText === word) {
+        timeoutId = setTimeout(() => {
+          setIsDeleting(true);
+        }, 2000);
+      } else {
+        timeoutId = setTimeout(() => {
+          setCurrentText(word.substring(0, currentText.length + 1));
+        }, 100);
+      }
+    }
+
+    return () => clearTimeout(timeoutId);
+  }, [currentText, isDeleting, currentWordIndex, words, isTypingStarted]);
 
   return (
-    <motion.span
-      style={{ display: "inline-block" }}
-      variants={container}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, margin: "-100px" }}
-      className={className}
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5, delay }}
+      className={`flex items-center justify-center ${className}`}
     >
-      {letters.map((letter, index) => (
-        <motion.span
-          variants={child}
-          transition={{ type: "spring", damping: 12, stiffness: 100 }}
-          key={index}
-          style={{ display: "inline-block" }}
-        >
-          {letter === " " ? "\u00A0" : letter}
-        </motion.span>
-      ))}
-    </motion.span>
+      <span className="min-h-[1.2em]">{currentText}</span>
+      <motion.span
+        animate={{ opacity: [1, 0, 1] }}
+        transition={{ repeat: Infinity, duration: 0.8, ease: "linear" }}
+        className="inline-block w-[2px] h-[1em] bg-[currentColor] ml-1"
+      />
+    </motion.div>
   );
 }
 
@@ -262,7 +284,19 @@ export default function App() {
             >
               Aman Shaikh
             </motion.h1>
-            <AnimatedLetters text="Machine Learning Developer | Full-Stack Web Developer" className="text-lg md:text-2xl font-light tracking-wide text-slate-300 drop-shadow-lg" delay={2} />
+            <TypewriterEffect
+              words={[
+                "Web Developer",
+                "Machine Learning Intern",
+                "Python Developer",
+                "Full Stack Developer",
+                "Frontend Developer",
+                "Code Explorer",
+                "AI Tools Explorer"
+              ]}
+              className="text-lg md:text-2xl font-bold tracking-wide text-white drop-shadow-lg"
+              delay={2}
+            />
           </motion.div>
 
           <motion.a
@@ -280,16 +314,16 @@ export default function App() {
         </motion.section>
 
         {/* ABOUT SECTION */}
-        <section id="about" className="section relative">
-          <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-12">
+        <section id="about" className="section relative py-12 md:py-24">
+          <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-8 md:gap-10 px-4">
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-200px" }}
+              viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 1 }}
               className="flex-1"
             >
-              <h2 className="text-left mb-6 gradient-text text-5xl">Introduction</h2>
+              <h2 className="text-left mb-4 md:mb-6 gradient-text">Introduction</h2>
               <motion.div className="glass-panel text-lg font-light leading-relaxed">
                 <p className="mb-4">I am a Computer Science student blending the structured logic of Machine Learning with the expansive creativity of Full-Stack Web Development.</p>
                 <p>Driven by curiosity, I forge digital experiences that feel intuitive, slightly surreal, and deeply functional.</p>
@@ -312,9 +346,9 @@ export default function App() {
         </section>
 
         {/* EXPERIENCE SECTION */}
-        <section id="experience" className="section my-32">
-          <h2 className="gradient-text mb-16 relative z-10 text-5xl">Experience</h2>
-          <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <section id="experience" className="section relative py-12 md:py-24">
+          <h2 className="gradient-text mb-8 md:mb-12 relative z-10">Experience</h2>
+          <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-3 gap-8 px-4">
             {experiences.map((exp, idx) => (
               <motion.div
                 key={idx}
@@ -343,9 +377,9 @@ export default function App() {
         </section>
 
         {/* SKILLS SECTION */}
-        <section className="section py-32 overflow-hidden relative">
-          <div className="max-w-6xl mx-auto p-12 md:p-20 rounded-[3rem] bg-black/40 backdrop-blur-md border border-white/10 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.7)] flex flex-col items-center relative z-10 w-full mx-4">
-            <h2 className="gradient-text mb-16 text-5xl">Skill Set</h2>
+        <section className="section overflow-hidden relative py-12 md:py-24">
+          <div className="max-w-6xl mx-auto p-6 md:p-16 rounded-[2rem] md:rounded-[3rem] bg-black/40 backdrop-blur-md border border-white/10 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.7)] flex flex-col items-center relative z-10 w-full mx-4">
+            <h2 className="gradient-text mb-6 md:mb-10">Skill Set</h2>
             <div className="max-w-4xl mx-auto flex flex-wrap justify-center gap-6">
               {skills.map((skill, idx) => (
                 <motion.div
@@ -373,9 +407,9 @@ export default function App() {
         </section>
 
         {/* PROJECTS SECTION */}
-        <section id="projects" className="section py-32 overflow-hidden relative">
-          <div className="max-w-7xl mx-auto w-full px-6 relative z-10">
-            <h2 className="gradient-text mb-16 text-5xl text-center drop-shadow-[0_0_20px_rgba(216,180,254,0.6)]">Projects</h2>
+        <section id="projects" className="section overflow-hidden relative py-12 md:py-24">
+          <div className="max-w-7xl mx-auto w-full px-4 relative z-10">
+            <h2 className="gradient-text mb-8 md:mb-12 text-center drop-shadow-[0_0_20px_rgba(216,180,254,0.6)]">Projects</h2>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
               {projects.map((project, idx) => (
                 <motion.div
@@ -385,9 +419,9 @@ export default function App() {
                   viewport={{ once: true, margin: "-50px" }}
                   transition={{ duration: 0.8, delay: idx * 0.1, ease: "easeOut" }}
                   whileHover={{ y: -10, scale: 1.02 }}
-                  className="group relative rounded-2xl overflow-hidden bg-[#0a0b10] border border-white/5 hover:border-white/10 cursor-pointer h-[400px] flex flex-col transition-all duration-300 hover:shadow-2xl hover:shadow-[var(--primary)]/10"
+                  className="group relative rounded-2xl overflow-hidden bg-[#0a0b10] border border-white/5 hover:border-white/10 cursor-pointer flex flex-col transition-all duration-300 hover:shadow-2xl hover:shadow-[var(--primary)]/10"
                 >
-                  <div className="h-[50%] w-full overflow-hidden relative">
+                  <div className="w-full aspect-video overflow-hidden relative bg-black/50">
                     <motion.img
                       src={project.image}
                       alt={project.title}
@@ -395,7 +429,7 @@ export default function App() {
                     />
                   </div>
 
-                  <div className="p-7 h-[50%] flex flex-col justify-between relative z-10 bg-gradient-to-b from-transparent to-[#0a0b10]/50">
+                  <div className="p-6 md:p-7 flex-1 flex flex-col justify-between relative z-10 bg-gradient-to-b from-transparent to-[#0a0b10]/50">
                     <div>
                       <div className="flex justify-between items-start mb-3">
                         <h3 className="text-xl font-bold text-slate-100 group-hover:text-white transition-colors">{project.title}</h3>

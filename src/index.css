@@ -64,13 +64,19 @@ body {
 }
 
 .section {
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 5rem 2rem;
+  padding: 1.5rem 1.5rem;
   position: relative;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .section {
+    padding: 2.5rem 2rem;
+  }
 }
 
 .max-w-7xl {
